@@ -1,8 +1,18 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import {
+	useLayoutEffect,
+	useRef,
+	forwardRef,
+	useImperativeHandle,
+} from "react";
 
-export default function InputArea() {
+export interface InputAreaHandle {
+	getText: () => string;
+	appendText: (text: string) => void;
+}
+
+const InputArea = forwardRef<InputAreaHandle>((_, ref) => {
 	const editorRef = useRef<HTMLDivElement>(null);
 	const caretRef = useRef<HTMLDivElement>(null);
 	const rafRef = useRef<number | null>(null);
@@ -12,40 +22,67 @@ export default function InputArea() {
 
 		rafRef.current = requestAnimationFrame(() => {
 			const selection = window.getSelection();
-			if (!selection || !selection.rangeCount) return;
+			if (
+				!selection ||
+				!selection.rangeCount ||
+				!editorRef.current?.contains(selection.anchorNode)
+			) {
+				return;
+			}
+
 			if (!editorRef.current?.contains(selection.anchorNode)) return;
 
 			let range = selection.getRangeAt(0).cloneRange();
 			range.collapse(true);
 
 			let rect = range.getBoundingClientRect();
-			let tempSpan: HTMLSpanElement | null = null;
 
+			let tempSpan: HTMLSpanElement | null = null;
 			if (rect.top === 0 && rect.left === 0) {
 				tempSpan = document.createElement("span");
 				tempSpan.style.display = "inline-block";
 				tempSpan.style.width = "1px";
 				tempSpan.style.height = "21px";
 				range.insertNode(tempSpan);
-
 				rect = tempSpan.getBoundingClientRect();
 				tempSpan.remove();
 			}
 
-			const editorRect = editorRef.current.getBoundingClientRect();
+			const editorRect = editorRef.current!.getBoundingClientRect();
 			if (!caretRef.current) return;
 
 			caretRef.current.style.top =
-				rect.top - editorRect.top + editorRef.current.scrollTop + "px";
+				rect.top - editorRect.top + editorRef.current!.scrollTop + "px";
 			caretRef.current.style.left =
 				rect.left -
 				editorRect.left +
-				editorRef.current.scrollLeft +
+				editorRef.current!.scrollLeft +
 				"px";
 			caretRef.current.style.height = rect.height + "px";
-			console.log(rect.height);
 		});
 	};
+
+	useImperativeHandle(ref, () => ({
+		getText: () => {
+			return editorRef.current?.innerText || "";
+		},
+		appendText: (text: string) => {
+			if (!editorRef.current) return;
+
+			editorRef.current.innerText += text;
+
+			editorRef.current.scrollTop = editorRef.current.scrollHeight;
+
+			const range = document.createRange();
+			range.selectNodeContents(editorRef.current);
+			range.collapse(false); // false = koniec
+			const selection = window.getSelection();
+			selection?.removeAllRanges();
+			selection?.addRange(range);
+
+			updateCaret();
+		},
+	}));
 
 	useLayoutEffect(() => {
 		const editor = editorRef.current;
@@ -129,7 +166,6 @@ export default function InputArea() {
 				className="
 					w-full h-full
 					max-h-full
-					flex-0
 					bg-neutral-900 p-3 rounded-xl
 					outline-none text-white
 					overflow-auto
@@ -138,17 +174,13 @@ export default function InputArea() {
 					caret-transparent
 				"
 			/>
-
 			<div
 				ref={caretRef}
-				className="
-					absolute
-					w-1.5
-					bg-white
-					pointer-events-none
-					opacity-0
-				"
+				className="absolute w-1.5 bg-white pointer-events-none opacity-0 transition-opacity duration-100"
 			/>
 		</div>
 	);
-}
+});
+
+InputArea.displayName = "InputArea";
+export default InputArea;

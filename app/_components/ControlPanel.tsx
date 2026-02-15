@@ -2,7 +2,15 @@
 
 import { useState } from "react";
 
-export default function ControlPanel() {
+interface ControlPanelProps {
+	onGenerate: (tokens: number, temperature: number) => void;
+	isGenerating: boolean;
+}
+
+export default function ControlPanel({
+	onGenerate,
+	isGenerating,
+}: ControlPanelProps) {
 	const [tokens, setTokens] = useState(256);
 	const [temperature, setTemperature] = useState(0.7);
 
@@ -25,6 +33,7 @@ export default function ControlPanel() {
 					value={tokens}
 					onChange={(e) => setTokens(Number(e.target.value))}
 					className="custom-slider"
+					disabled={isGenerating}
 					style={{
 						background: `linear-gradient(to right, #10b981 0%, #10b981 ${
 							((tokens - 50) / (2048 - 50)) * 100
@@ -55,6 +64,7 @@ export default function ControlPanel() {
 					value={temperature}
 					onChange={(e) => setTemperature(Number(e.target.value))}
 					className="custom-slider"
+					disabled={isGenerating}
 					style={{
 						background: `linear-gradient(to right, #10b981 0%, #10b981 ${
 							(temperature / 1.7) * 100
@@ -71,26 +81,17 @@ export default function ControlPanel() {
 			</div>
 
 			<button
-				className="
+				disabled={isGenerating}
+				className={`
 					mt-auto
-					bg-white
-					text-black
-					rounded-xl
-					p-3
-					font-semibold
-					hover:bg-neutral-300
-					active:scale-95
+					bg-white text-black
+					rounded-xl p-3 font-semibold
 					transition
-                    cursor-pointer
-				"
-				onClick={() =>
-					console.log({
-						tokens,
-						temperature,
-					})
-				}
+					${isGenerating ? "opacity-50 cursor-not-allowed" : "hover:bg-neutral-300 active:scale-95 cursor-pointer"}
+				`}
+				onClick={() => onGenerate(tokens, temperature)}
 			>
-				Generuj track
+				{isGenerating ? "Generowanie..." : "Generuj track"}
 			</button>
 		</div>
 	);
