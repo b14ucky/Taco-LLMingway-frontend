@@ -8,7 +8,7 @@ export default function Column({
 	return (
 		<section
 			style={{ flex: flex }}
-			className="bg-neutral-950 rounded-2xl p-3 min-h-0 flex flex-col items-center"
+			className="bg-neutral-950 rounded-2xl p-3 h-full flex flex-col overflow-hidden"
 		>
 			{children}
 		</section>

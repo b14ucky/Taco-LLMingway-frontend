@@ -121,13 +121,15 @@ export default function InputArea() {
 	}, []);
 
 	return (
-		<div className="relative w-full h-full">
+		<div className="relative w-full flex-1 min-h-0">
 			<div
 				ref={editorRef}
 				contentEditable
 				suppressContentEditableWarning
 				className="
 					w-full h-full
+					max-h-full
+					flex-0
 					bg-neutral-900 p-3 rounded-xl
 					outline-none text-white
 					overflow-auto
