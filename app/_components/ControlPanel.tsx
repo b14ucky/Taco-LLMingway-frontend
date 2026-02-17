@@ -20,11 +20,15 @@ export default function ControlPanel({
 		return "nocne życie Warszawy";
 	};
 
-	return (
-		<div className="flex flex-col gap-8 h-full w-3/4 mt-4">
-			<div className="flex flex-col gap-3">
-				<h3 className="font-light">Liczba tokenów (liter)</h3>
+	const accentColor = "#ffffff";
+	const trackColor = "#333333";
 
+	return (
+		<div className="flex flex-col gap-8 h-full w-full p-2 mt-4 font-mono">
+			<div className="flex flex-col gap-3">
+				<label className="text-sm text-neutral-400">
+					Liczba tokenów
+				</label>
 				<input
 					type="range"
 					min={50}
@@ -32,30 +36,29 @@ export default function ControlPanel({
 					step={1}
 					value={tokens}
 					onChange={(e) => setTokens(Number(e.target.value))}
-					className="custom-slider"
+					className="w-full h-1 bg-neutral-700 rounded-lg appearance-none cursor-pointer accent-white"
 					disabled={isGenerating}
 					style={{
-						background: `linear-gradient(to right, #10b981 0%, #10b981 ${
+						background: `linear-gradient(to right, ${accentColor} 0%, ${accentColor} ${
 							((tokens - 50) / (2048 - 50)) * 100
-						}%, #333 ${((tokens - 50) / (2048 - 50)) * 100}%, #333 100%)`,
+						}%, ${trackColor} ${((tokens - 50) / (2048 - 50)) * 100}%, ${trackColor} 100%)`,
 					}}
 				/>
-
 				<input
 					type="number"
 					min={50}
 					max={2048}
 					value={tokens}
 					onChange={(e) => setTokens(Number(e.target.value))}
-					className="
-                    bg-neutral-900 text-white p-2
-                    rounded-md outline-none w-24"
+					className="bg-black text-white text-lg font-bold p-2 border
+						border-neutral-700 rounded-md outline-none w-full
+						number-input-dark
+					"
 				/>
 			</div>
 
-			<div className="flex flex-col gap-4">
-				<h3 className="text-light">Temperatura</h3>
-
+			<div className="border-t border-neutral-800 pt-6 flex flex-col gap-4">
+				<label className="text-sm text-neutral-400">Temperatura</label>
 				<input
 					type="range"
 					min={0.01}
@@ -63,18 +66,19 @@ export default function ControlPanel({
 					step={0.01}
 					value={temperature}
 					onChange={(e) => setTemperature(Number(e.target.value))}
-					className="custom-slider"
+					className="w-full h-1 bg-neutral-700 rounded-lg appearance-none cursor-pointer accent-white"
 					disabled={isGenerating}
 					style={{
-						background: `linear-gradient(to right, #10b981 0%, #10b981 ${
+						background: `linear-gradient(to right, ${accentColor} 0%, ${accentColor} ${
 							(temperature / 1.7) * 100
-						}%, #333 ${(temperature / 1.7) * 100}%, #333 100%)`,
+						}%, ${trackColor} ${(temperature / 1.7) * 100}%, ${trackColor} 100%)`,
 					}}
 				/>
-
-				<div className="text-sm text-neutral-400">
-					{temperature.toFixed(2)} –{" "}
-					<span className="text-white">
+				<div className="text-sm">
+					<span className="text-white font-bold">
+						{temperature.toFixed(2)}
+					</span>
+					<span className="text-neutral-500 ml-2">
 						{getTemperatureLabel(temperature)}
 					</span>
 				</div>
@@ -85,9 +89,9 @@ export default function ControlPanel({
 				className={`
 					mt-auto
 					bg-white text-black
-					rounded-xl p-3 font-semibold
-					transition
-					${isGenerating ? "opacity-50 cursor-not-allowed" : "hover:bg-neutral-300 active:scale-95 cursor-pointer"}
+					rounded-md p-3 font-semibold text-sm
+					transition duration-150
+					${isGenerating ? "opacity-50 cursor-not-allowed" : "hover:bg-neutral-200 active:scale-95 cursor-pointer"}
 				`}
 				onClick={() => onGenerate(tokens, temperature)}
 			>

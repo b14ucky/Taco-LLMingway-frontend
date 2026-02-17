@@ -16,9 +16,7 @@ const InputArea = forwardRef<InputAreaHandle>((_, ref) => {
 		},
 		appendText: (text: string) => {
 			if (!editorRef.current) return;
-
 			editorRef.current.innerText += text;
-
 			editorRef.current.scrollTop = editorRef.current.scrollHeight;
 
 			const range = document.createRange();
@@ -31,7 +29,7 @@ const InputArea = forwardRef<InputAreaHandle>((_, ref) => {
 	}));
 
 	return (
-		<div className="relative w-full flex-1 min-h-0">
+		<div className="relative w-full flex-1 min-h-0 p-2">
 			<div
 				ref={editorRef}
 				contentEditable
@@ -39,11 +37,10 @@ const InputArea = forwardRef<InputAreaHandle>((_, ref) => {
 				className="
 					w-full min-h-75
 					md:h-full
-					max-h-full
-					bg-neutral-900 p-3 rounded-xl
-					outline-none text-white
+					bg-neutral-950 p-4 rounded-xl
+					border border-neutral-800
+					outline-none text-white font-mono text-sm
 					overflow-auto
-					flex flex-col
 					whitespace-pre-wrap
 					caret-block
 					caret-white

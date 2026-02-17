@@ -10,8 +10,8 @@ export default function Column({
 	return (
 		<section
 			className={`
-                bg-neutral-950 rounded-2xl p-3 
-                flex flex-col items-center
+                bg-black border border-neutral-800 rounded-xl p-3 
+                flex flex-col
                 w-full h-fit min-h-75
 				overflow-hidden
                 md:h-full
