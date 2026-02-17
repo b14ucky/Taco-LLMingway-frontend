@@ -5,10 +5,15 @@ import Column from "./_components/Column";
 import ControlPanel from "./_components/ControlPanel";
 import Header from "./_components/Header";
 import InputArea, { InputAreaHandle } from "./_components/InputArea";
+import AlertModal, { AlertType } from "@/components/AlertModal";
 
 export default function Home() {
 	const inputAreaRef = useRef<InputAreaHandle>(null);
 	const [isGenerating, setIsGenerating] = useState(false);
+	const [alert, setAlert] = useState<{
+		type: AlertType;
+		message: string;
+	} | null>(null);
 
 	const handleGenerate = async (tokens: number, temperature: number) => {
 		if (!inputAreaRef.current) return;
@@ -16,7 +21,10 @@ export default function Home() {
 		const currentPrompt = inputAreaRef.current.getText();
 
 		if (!currentPrompt.trim()) {
-			alert("Wpisz jakiś tekst początkowy!");
+			setAlert({
+				type: AlertType.INFO,
+				message: "Wpisz jakiś tekst początkowy.",
+			});
 			return;
 		}
 
@@ -56,7 +64,10 @@ export default function Home() {
 				"An error occured whilst generating response:",
 				error,
 			);
-			alert("Coś poszło nie tak z generowaniem.");
+			setAlert({
+				type: AlertType.ERROR,
+				message: `Wystąpił błąd z generowaniem. Spróbuj ponownie później.\n${error}`,
+			});
 		} finally {
 			setIsGenerating(false);
 		}
@@ -83,6 +94,13 @@ export default function Home() {
 					/>
 				</Column>
 			</div>
+			{alert && (
+				<AlertModal
+					type={alert.type}
+					message={alert.message}
+					onClose={() => setAlert(null)}
+				/>
+			)}
 		</main>
 	);
 }
