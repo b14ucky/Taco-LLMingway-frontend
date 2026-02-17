@@ -78,3 +78,7 @@ body {
 	border-radius: 999px;
 	background: #333;
 }
+
+.caret-block {
+	caret-shape: block !important;
+}
