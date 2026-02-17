@@ -164,7 +164,8 @@ const InputArea = forwardRef<InputAreaHandle>((_, ref) => {
 				contentEditable
 				suppressContentEditableWarning
 				className="
-					w-full h-full
+					w-full min-h-75
+					md:h-full
 					max-h-full
 					bg-neutral-900 p-3 rounded-xl
 					outline-none text-white

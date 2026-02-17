@@ -57,19 +57,20 @@ export default function Home() {
 	};
 
 	return (
-		<main className="font-mono flex h-screen flex-col bg-neutral-900 gap-2 p-1 overflow-hidden">
-			<div className="flex-none h-1/12">
+		<main className="font-mono flex min-h-screen md:h-screen flex-col bg-neutral-900 gap-2 p-1 overflow-y-auto md:overflow-hidden">
+			<div className="flex-none">
 				<Header />
 			</div>
 
-			<div className="flex flex-1 gap-2 h-11/12">
-				<Column flex={70}>
-					<h3 className="text-lg font-light p-4">
+			<div className="flex flex-col md:flex-row flex-1 gap-2 min-h-0">
+				<Column className="md:basis-[70%]">
+					<h3 className="text-lg font-light p-4 text-white">
 						Wpisz początek wersów...
 					</h3>
 					<InputArea ref={inputAreaRef} />
 				</Column>
-				<Column flex={30}>
+
+				<Column className="md:basis-[30%]">
 					<ControlPanel
 						onGenerate={handleGenerate}
 						isGenerating={isGenerating}
