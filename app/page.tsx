@@ -23,7 +23,7 @@ export default function Home() {
 		setIsGenerating(true);
 
 		try {
-			const response = await fetch("http://localhost:8000/stream", {
+			const response = await fetch("/api/stream", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
