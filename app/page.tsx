@@ -37,6 +37,9 @@ export default function Home() {
 
 			if (!response.body) throw new Error("No response body");
 
+			if (!response.ok)
+				throw new Error(`${response.status}: ${response.statusText}`);
+
 			const reader = response.body.getReader();
 			const decoder = new TextDecoder();
 
@@ -49,7 +52,10 @@ export default function Home() {
 				inputAreaRef.current.appendText(textChunk);
 			}
 		} catch (error) {
-			console.error("Błąd generowania:", error);
+			console.error(
+				"An error occured whilst generating response:",
+				error,
+			);
 			alert("Coś poszło nie tak z generowaniem.");
 		} finally {
 			setIsGenerating(false);
