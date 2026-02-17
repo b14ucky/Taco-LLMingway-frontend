@@ -3,9 +3,10 @@
 import { useRef, useState } from "react";
 import Column from "./_components/Column";
 import ControlPanel from "./_components/ControlPanel";
-import Header from "./_components/Header";
+import Header from "@/components/Header";
 import InputArea, { InputAreaHandle } from "./_components/InputArea";
 import AlertModal, { AlertType } from "@/components/AlertModal";
+import Link from "next/link";
 
 export default function Home() {
 	const inputAreaRef = useRef<InputAreaHandle>(null);
@@ -74,9 +75,16 @@ export default function Home() {
 	};
 
 	return (
-		<main className="font-mono flex min-h-screen md:h-screen flex-col bg-neutral-900 gap-2 p-1 overflow-y-auto md:overflow-hidden">
+		<main className="font-mono flex min-h-screen md:h-screen flex-col bg-black gap-2 p-1 overflow-y-auto md:overflow-hidden text-white">
 			<div className="flex-none">
-				<Header />
+				<Header text="Taco LLMingway">
+					<Link
+						href="/docs"
+						className="text-xs font-mono border border-neutral-700 hover:bg-white hover:text-black transition px-3 py-1 rounded"
+					>
+						Jak to działa?
+					</Link>
+				</Header>
 			</div>
 
 			<div className="flex flex-col md:flex-row flex-1 gap-2 min-h-0">
