@@ -38,7 +38,7 @@ jobs:
 
     - name: Upload files
       run: |
-        rsync -avz "ssh -p ${{ secrets.PORT }}" --delete ./out/ ${{secrets.USERNAME}}@${{secrets.HOST}}:/var/www/out/
+        rsync -avz -e "ssh -p ${{ secrets.PORT }}" --delete ./out/ ${{secrets.USERNAME}}@${{secrets.HOST}}:/var/www/out/
 
     - name: Restart Nginx
       uses: appleboy/ssh-action@v1.2.5
