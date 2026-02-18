@@ -36,9 +36,15 @@ jobs:
           cd /var/www/out
           rm -rf *
 
-    - name: Upload files
-      run: |
-        rsync -avz -e "ssh -p ${{ secrets.PORT }}" --delete ./out/ ${{secrets.USERNAME}}@${{secrets.HOST}}:/var/www/out/
+    - name: Upload files via SCP
+      uses: appleboy/scp-action@v1.2.5
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.PORT }}
+        source: "./out/"
+        target: "/var/www/out/"
 
     - name: Restart Nginx
       uses: appleboy/ssh-action@v1.2.5
