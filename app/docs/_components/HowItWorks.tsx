@@ -27,7 +27,7 @@ export default function HowItWorks() {
 					<div className="space-y-2 font-mono text-xs">
 						<CodeBadge>
 							<span className="text-neutral-500">
-								// Styl dowolny
+								{"// Styl dowolny"}
 							</span>
 							<br />
 							Wracam ekspresem do Warszawy...
@@ -35,7 +35,7 @@ export default function HowItWorks() {
 
 						<CodeBadge>
 							<span className="text-neutral-500">
-								// Styl strukturalny
+								{"// Styl strukturalny"}
 							</span>
 							<br />
 							[ZAKOCHAŁEM SIĘ POD APTEKĄ]

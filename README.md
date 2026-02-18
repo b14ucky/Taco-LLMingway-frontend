@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Taco LLMingway - Frontend
+
+A sleek, minimalist web interface for an AI text generation model trained on the complete discography of Taco Hemingway. This application allows users to interact with the model, adjust creativity parameters, and watch the lyrics unfold in real-time.
+
+## Features
+
+- **Token Streaming**: Utilizes `ReadableStream` to display generated text live, token by token, creating a typewriter effect.
+- **Precision Controls**: Full control over generation length (tokens) and creativity (temperature).
+- **Vibe Presets**: Three distinct generation modes based on temperature:
+    - **Cool Rationalist** (Low temp): Consistent and logical.
+    - **Classic Storytelling** (Mid temp): The perfect balance of rhyme and reason.
+    - **Warsaw Nightlife** (High temp): Abstract, chaotic, and metaphorical.
+- **Responsive Design**: Built with Tailwind CSS 4, optimized for both mobile and desktop "night mode" aesthetics.
+- **Internal Documentation**: A dedicated `/docs` page explaining model mechanics and prompt engineering.
+
+## Tech Stack
+
+- **Framework**: [Next.js 16+](https://nextjs.org/) (App Router)
+- **Library**: [React 19](https://react.dev/)
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Deployment**: GitHub Actions (CD) + SSH/SCP to Nginx
+
+## Project Structure
+
+```bash
+├── app/ # App Router logic
+│ ├── \_components/ # Home page specific components
+│ ├── docs/ # Model documentation & guides
+│ └── globals.css # Tailwind 4 config & custom animations
+├── components/ # Shared UI (Modals, Headers)
+├── .github/workflows/ # CI/CD deployment pipeline
+├── next.config.ts # Next.js static export configuration
+└── package.json # Scripts and dependencies
+```
 
 ## Getting Started
 
-First, run the development server:
+1.  **Clone the repository**:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+    ```bash
+    git clone https://github.com/your-username/taco-llmingway-frontend.git
+    cd taco-llmingway-frontend
+    ```
+
+2.  **Install dependencies**:
+
+    ```bash
+    npm install
+    ```
+
+3.  **Run the development server**:
+
+    ```bash
+    npm run dev
+    ```
+
+    Open [http://localhost:3000](http://localhost:3000) to see the result.
+
+4.  **Build for production**:
+    ```bash
+    npm run build
+    ```
+    The static files will be generated in the `/out` directory.
+
+## API Integration
+
+The frontend communicates with the LLM backend via the following endpoint:
+`POST /api/stream`
+
+**Payload Example:**
+
+```json
+{
+	"starting_text": "Wracam ekspresem do Warszawy...",
+	"n_iters": 256,
+	"temperature": 0.7
+}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Continuous Deployment
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+This project uses a GitHub Actions workflow (`deploy.yml`) to automate the deployment process. Upon pushing to `main`:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1.  The app is built into static files.
+2.  The existing build on the server is cleared.
+3.  New files are uploaded via **SCP**.
+4.  The **Nginx** service is reloaded.
 
-## Learn More
+_Required Secrets: `HOST`, `USERNAME`, `SSH_KEY`, `PORT`._
 
-To learn more about Next.js, take a look at the following resources:
+## License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
