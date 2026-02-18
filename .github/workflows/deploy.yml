@@ -44,7 +44,7 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         port: ${{ secrets.PORT }}
         source: "./out/"
-        target: "/var/www/out/"
+        target: "/var/www/"
 
     - name: Restart Nginx
       uses: appleboy/ssh-action@v1.2.5
