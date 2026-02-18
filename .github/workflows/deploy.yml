@@ -31,6 +31,7 @@ jobs:
         host: ${{secrets.HOST}}
         username: ${{secrets.USERNAME}}
         key: ${{secrets.SSH_KEY}}
+        port: ${{secrets.PORT}}
         script: |
           cd /var/www/out
           rm -rf *
@@ -45,5 +46,6 @@ jobs:
         host: ${{secrets.HOST}}
         username: ${{secrets.USERNAME}}
         key: ${{secrets.SSH_KEY}}
+        port: ${{secrets.PORT}}
         script: |
           systemctl reload nginx
