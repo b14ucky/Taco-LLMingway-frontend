@@ -1,0 +1,49 @@
+name: Taco LLMingway frontend CD
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Use Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Build App 
+      run: npm run build
+
+    - name: Deploy to server
+      uses: appleboy/ssh-action@v1.2.5
+      with:
+        host: ${{secrets.HOST}}
+        username: ${{secrets.USERNAME}}
+        key: ${{secrets.SSH_KEY}}
+        script: |
+          cd /var/www/out
+          rm -rf *
+
+    - name: Upload files
+      run: |
+        rsync -avz --delete ./out/ ${{secrets.USERNAME}}@${{secrets.HOST}}:/var/www/out/
+
+    - name: Restart Nginx
+      uses: appleboy/ssh-action@v1.2.5
+      with:
+        host: ${{secrets.HOST}}
+        username: ${{secrets.USERNAME}}
+        key: ${{secrets.SSH_KEY}}
+        script: |
+          systemctl reload nginx
