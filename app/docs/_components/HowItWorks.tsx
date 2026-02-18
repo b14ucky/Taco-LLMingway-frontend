@@ -25,7 +25,6 @@ export default function HowItWorks() {
 						z datasetu:
 					</p>
 					<div className="space-y-2 font-mono text-xs">
-						{/* Użycie CodeBadge */}
 						<CodeBadge>
 							<span className="text-neutral-500">
 								// Styl dowolny
@@ -34,7 +33,6 @@ export default function HowItWorks() {
 							Wracam ekspresem do Warszawy...
 						</CodeBadge>
 
-						{/* Użycie CodeBadge */}
 						<CodeBadge>
 							<span className="text-neutral-500">
 								// Styl strukturalny
@@ -89,7 +87,7 @@ export default function HowItWorks() {
 				<InfoCard
 					title="Liczba tokenów"
 					iconColor="bg-neutral-500"
-					className="md:col-span-2 flex flex-col md:flex-row items-center justify-between gap-4"
+					className="md:col-span-2 flex flex-col md:flex-row md:items-center justify-between gap-4"
 				>
 					<div>
 						<p className="text-neutral-400 text-sm font-mono max-w-xl">
@@ -101,7 +99,7 @@ export default function HowItWorks() {
 							.
 						</p>
 					</div>
-					<CodeBadge className="whitespace-nowrap px-4 py-2">
+					<CodeBadge className="whitespace-nowrap px-4 py-2 text-center">
 						Limit API: 2048 tokenów
 					</CodeBadge>
 				</InfoCard>

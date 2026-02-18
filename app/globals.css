@@ -107,4 +107,5 @@ body {
 .number-input-dark::-webkit-outer-spin-button {
 	filter: invert(1);
 	opacity: 0.6;
+	cursor: pointer;
 }
