@@ -1,0 +1,54 @@
+{
+  "Common": {
+    "docs": "Jak to działa?",
+    "back": "← Wróć do generatora",
+    "documentation": "Dokumentacja"
+  },
+  "Index": {
+    "placeholder": "Wpisz początek wersów...",
+    "tokensLabel": "Liczba tokenów",
+    "tempLabel": "Temperatura",
+    "generate": "Generuj track",
+    "generating": "Generowanie...",
+    "infoAlert": "Wpisz jakiś tekst początkowy.",
+    "errorAlert": "Wystąpił błąd z generowaniem. Spróbuj ponownie później."
+  },
+  "TempLabels": {
+    "cool": "chłodny racjonalista",
+    "classic": "klasyczny storytelling",
+    "warsaw": "nocne życie Warszawy"
+  },
+  "Docs": {
+    "title": "Dokumentacja Modelu",
+    "techTitle": "Technikalia",
+    "techDesc1": "Model przeszedł pre-training na pełnym korpusie tekstów Taco z Geniusa. Został dostosowany do obsługi ",
+    "techDescSpan1": "znaczników markup",
+    "techDesc2": ", które są traktowane jako ",
+    "techDescSpan2": "pojedyncze, niepodzielne tokeny",
+    "techDesc3": ". Dzięki temu model świetnie rozumie strukturę utworu bez marnowania limitu na techniczne znaki.",
+    "feedingTitle": "Jak Karmić Model",
+    "feedingDesc": "Możesz pisać \"na żywioł\" lub wymusić konkretną sekcję za pomocą tagów:",
+    "styleFree": "// Styl dowolny (dokańczanie)",
+    "styleStruct": "// Styl strukturalny (tagi)",
+    "tempTitle": "Temperatura (Kreatywność)",
+    "tempDesc": "Parametr sterujący losowością modelu. Wybierz swój vibe:",
+    "tokensTitle": "Liczba tokenów",
+    "tokensDesc": "Określa limit wygenerowanego tekstu. Dla uproszczenia:",
+    "tokensFormula": "1 Token ≈ 1 Litera LUB 1 Tag",
+    "apiLimit": "Limit API: 2048 tokenów",
+    "version": "taco-llmingway v2.0.0"
+  },
+  "TempCards": {
+    "coolTitle": "Chłodny Racjonalista",
+    "coolDesc": "Spójny, logiczny, powtarzalny. Mało ryzykuje.",
+    "classicTitle": "Klasyczny Storytelling",
+    "classicDesc": "Złoty środek. Balans między rymem a sensem.",
+    "warsawTitle": "Nocne Życie Warszawy",
+    "warsawDesc": "Chaos, abstrakcja, halucynacje i dziwne metafory."
+  },
+  "AlertModal": {
+    "info": "Informacja",
+    "error": "Błąd",
+    "close": "Zamknij"
+  }
+}

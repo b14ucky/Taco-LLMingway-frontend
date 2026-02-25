@@ -6,7 +6,8 @@ import ControlPanel from "./_components/ControlPanel";
 import Header from "@/components/Header";
 import InputArea, { InputAreaHandle } from "./_components/InputArea";
 import AlertModal, { AlertType } from "@/components/AlertModal";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 
 export default function Home() {
   const inputAreaRef = useRef<InputAreaHandle>(null);
@@ -24,7 +25,7 @@ export default function Home() {
     if (!currentPrompt.trim()) {
       setAlert({
         type: AlertType.INFO,
-        message: "Wpisz jakiś tekst początkowy.",
+        message: tIndex("infoAlert"),
       });
       return;
     }
@@ -64,12 +65,15 @@ export default function Home() {
       console.error("An error occured whilst generating response:", error);
       setAlert({
         type: AlertType.ERROR,
-        message: `Wystąpił błąd z generowaniem. Spróbuj ponownie później.\n${error}`,
+        message: `${tIndex("errorAlert")}\n${error}`,
       });
     } finally {
       setIsGenerating(false);
     }
   };
+
+  const tCommon = useTranslations("Common");
+  const tIndex = useTranslations("Index");
 
   return (
     <main className="font-mono flex min-h-screen md:h-screen flex-col bg-black gap-2 p-1 overflow-y-auto md:overflow-hidden text-white">
@@ -78,14 +82,14 @@ export default function Home() {
           href="/docs"
           className="text-xs font-mono border border-neutral-700 hover:bg-white hover:text-black transition px-3 py-1 rounded"
         >
-          Jak to działa?
+          {tCommon("docs")}
         </Link>
       </Header>
 
       <div className="flex flex-col md:flex-row flex-1 gap-2 min-h-0">
         <Column className="md:basis-[70%]">
           <h3 className="text-lg font-light p-4 text-white">
-            Wpisz początek wersów...
+            {tIndex("placeholder")}
           </h3>
           <InputArea ref={inputAreaRef} />
         </Column>

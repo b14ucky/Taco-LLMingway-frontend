@@ -1,0 +1,54 @@
+{
+  "Common": {
+    "docs": "How it works?",
+    "back": "← Back to generator",
+    "documentation": "Documentation"
+  },
+  "Index": {
+    "placeholder": "Type the beginning of the lines...",
+    "tokensLabel": "Token count",
+    "tempLabel": "Temperature",
+    "generate": "Generate track",
+    "generating": "Generating...",
+    "infoAlert": "Please enter some starting text.",
+    "errorAlert": "An error occurred while generating. Please try again later."
+  },
+  "TempLabels": {
+    "cool": "cool rationalist",
+    "classic": "classic storytelling",
+    "warsaw": "Warsaw night life"
+  },
+  "Docs": {
+    "title": "Model Documentation",
+    "techTitle": "Technical Details",
+    "techDesc1": "The model has been pre-trained on a full corpus of Taco's lyrics from Genius. It has been fine-tuned to handle ",
+    "techDescSpan1": "markup tags",
+    "techDesc2": ", which are treated as ",
+    "techDescSpan2": "single, indivisible tokens",
+    "techDesc3": ". This allows the model to perfectly understand the song structure without wasting token limits on technical characters.",
+    "feedingTitle": "How to Feed the Model",
+    "feedingDesc": "You can write freely or force a specific section using tags:",
+    "styleFree": "// Free style (completion)",
+    "styleStruct": "// Structural style (tags)",
+    "tempTitle": "Temperature (Creativity)",
+    "tempDesc": "A parameter controlling the randomness of the model. Choose your vibe:",
+    "tokensTitle": "Token Count",
+    "tokensDesc": "Defines the limit of the generated text. For simplification:",
+    "tokensFormula": "1 Token ≈ 1 Letter OR 1 Tag",
+    "apiLimit": "API Limit: 2048 tokens",
+    "version": "taco-llmingway v2.0.0"
+  },
+  "TempCards": {
+    "coolTitle": "Cool Rationalist",
+    "coolDesc": "Consistent, logical, repetitive. Low risk.",
+    "classicTitle": "Classic Storytelling",
+    "classicDesc": "The middle ground. Balance between rhyme and reason.",
+    "warsawTitle": "Warsaw Night Life",
+    "warsawDesc": "Chaos, abstraction, hallucinations, and strange metaphors."
+  },
+  "AlertModal": {
+    "info": "Information",
+    "error": "Error",
+    "close": "Close"
+  }
+}
