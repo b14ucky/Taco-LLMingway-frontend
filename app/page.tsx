@@ -9,106 +9,101 @@ import AlertModal, { AlertType } from "@/components/AlertModal";
 import Link from "next/link";
 
 export default function Home() {
-	const inputAreaRef = useRef<InputAreaHandle>(null);
-	const [isGenerating, setIsGenerating] = useState(false);
-	const [alert, setAlert] = useState<{
-		type: AlertType;
-		message: string;
-	} | null>(null);
+  const inputAreaRef = useRef<InputAreaHandle>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [alert, setAlert] = useState<{
+    type: AlertType;
+    message: string;
+  } | null>(null);
 
-	const handleGenerate = async (tokens: number, temperature: number) => {
-		if (!inputAreaRef.current) return;
+  const handleGenerate = async (tokens: number, temperature: number) => {
+    if (!inputAreaRef.current) return;
 
-		const currentPrompt = inputAreaRef.current.getText();
+    const currentPrompt = inputAreaRef.current.getText();
 
-		if (!currentPrompt.trim()) {
-			setAlert({
-				type: AlertType.INFO,
-				message: "Wpisz jakiś tekst początkowy.",
-			});
-			return;
-		}
+    if (!currentPrompt.trim()) {
+      setAlert({
+        type: AlertType.INFO,
+        message: "Wpisz jakiś tekst początkowy.",
+      });
+      return;
+    }
 
-		setIsGenerating(true);
+    setIsGenerating(true);
 
-		try {
-			const response = await fetch("/api/stream", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					starting_text: currentPrompt,
-					n_iters: tokens,
-					temperature: temperature,
-				}),
-			});
+    try {
+      const response = await fetch("/api/stream", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          starting_text: currentPrompt,
+          n_iters: tokens,
+          temperature: temperature,
+        }),
+      });
 
-			if (!response.body) throw new Error("No response body");
+      if (!response.body) throw new Error("No response body");
 
-			if (!response.ok)
-				throw new Error(`${response.status}: ${response.statusText}`);
+      if (!response.ok)
+        throw new Error(`${response.status}: ${response.statusText}`);
 
-			const reader = response.body.getReader();
-			const decoder = new TextDecoder();
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
 
-			while (true) {
-				const { done, value } = await reader.read();
-				if (done) break;
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
 
-				const textChunk = decoder.decode(value, { stream: true });
+        const textChunk = decoder.decode(value, { stream: true });
 
-				inputAreaRef.current.appendText(textChunk);
-			}
-		} catch (error) {
-			console.error(
-				"An error occured whilst generating response:",
-				error,
-			);
-			setAlert({
-				type: AlertType.ERROR,
-				message: `Wystąpił błąd z generowaniem. Spróbuj ponownie później.\n${error}`,
-			});
-		} finally {
-			setIsGenerating(false);
-		}
-	};
+        inputAreaRef.current.appendText(textChunk);
+      }
+    } catch (error) {
+      console.error("An error occured whilst generating response:", error);
+      setAlert({
+        type: AlertType.ERROR,
+        message: `Wystąpił błąd z generowaniem. Spróbuj ponownie później.\n${error}`,
+      });
+    } finally {
+      setIsGenerating(false);
+    }
+  };
 
-	return (
-		<main className="font-mono flex min-h-screen md:h-screen flex-col bg-black gap-2 p-1 overflow-y-auto md:overflow-hidden text-white">
-			<div className="flex-none">
-				<Header text="Taco LLMingway">
-					<Link
-						href="/docs"
-						className="text-xs font-mono border border-neutral-700 hover:bg-white hover:text-black transition px-3 py-1 rounded"
-					>
-						Jak to działa?
-					</Link>
-				</Header>
-			</div>
+  return (
+    <main className="font-mono flex min-h-screen md:h-screen flex-col bg-black gap-2 p-1 overflow-y-auto md:overflow-hidden text-white">
+      <Header text="Taco LLMingway">
+        <Link
+          href="/docs"
+          className="text-xs font-mono border border-neutral-700 hover:bg-white hover:text-black transition px-3 py-1 rounded"
+        >
+          Jak to działa?
+        </Link>
+      </Header>
 
-			<div className="flex flex-col md:flex-row flex-1 gap-2 min-h-0">
-				<Column className="md:basis-[70%]">
-					<h3 className="text-lg font-light p-4 text-white">
-						Wpisz początek wersów...
-					</h3>
-					<InputArea ref={inputAreaRef} />
-				</Column>
+      <div className="flex flex-col md:flex-row flex-1 gap-2 min-h-0">
+        <Column className="md:basis-[70%]">
+          <h3 className="text-lg font-light p-4 text-white">
+            Wpisz początek wersów...
+          </h3>
+          <InputArea ref={inputAreaRef} />
+        </Column>
 
-				<Column className="md:basis-[30%]">
-					<ControlPanel
-						onGenerate={handleGenerate}
-						isGenerating={isGenerating}
-					/>
-				</Column>
-			</div>
-			{alert && (
-				<AlertModal
-					type={alert.type}
-					message={alert.message}
-					onClose={() => setAlert(null)}
-				/>
-			)}
-		</main>
-	);
+        <Column className="md:basis-[30%]">
+          <ControlPanel
+            onGenerate={handleGenerate}
+            isGenerating={isGenerating}
+          />
+        </Column>
+      </div>
+      {alert && (
+        <AlertModal
+          type={alert.type}
+          message={alert.message}
+          onClose={() => setAlert(null)}
+        />
+      )}
+    </main>
+  );
 }
